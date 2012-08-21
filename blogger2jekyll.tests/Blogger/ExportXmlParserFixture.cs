@@ -38,7 +38,7 @@ namespace blogger2jekyll.tests.Blogger
             Assert.AreEqual("Blogger", feed.Generator.Name);
 
             Assert.IsNotNull(feed.Entries);
-            Assert.AreEqual(213, feed.Entries.Count);
+            Assert.AreEqual(75, feed.Entries.Count);
 
             // spot check a known entry -- it looks like this:
 
@@ -65,7 +65,7 @@ namespace blogger2jekyll.tests.Blogger
             //  <author>
             //    <name>Kristopher Cargile</name>
             //    <uri>http://www.blogger.com/profile/15499066457899479832</uri>
-            //    <email>kristophercargile@gmail.com</email>
+            //    <email>noreply@blogger.com</email>
             //    <gd:image rel='http://schemas.google.com/g/2005#thumbnail' width='16' height='16' src='http://img2.blogblog.com/img/b16-rounded.gif'/>
             //  </author>
             //  <thr:total>0</thr:total>

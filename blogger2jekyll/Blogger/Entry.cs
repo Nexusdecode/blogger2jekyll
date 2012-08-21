@@ -128,6 +128,14 @@ namespace blogger2jekyll.Blogger
         }
 
         /// <summary>
+        /// Gets or sets the link comments.
+        /// </summary>
+        /// <value>The links.</value>
+        [XmlArray(ElementName = "comments")]
+        [XmlArrayItem(ElementName = "comment")]
+        public List<Comment> Comments { get; set; }
+
+        /// <summary>
         /// Gets or sets the link elements.
         /// </summary>
         /// <value>The links.</value>
@@ -294,6 +302,16 @@ namespace blogger2jekyll.Blogger
             {
                 // nothing to do; facilitates serialization
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Entry"/> class.
+        /// </summary>
+        public Entry()
+        {
+            Categories = new List<Category>();
+            Links = new List<Link>();
+            Comments = new List<Comment>();
         }
 
         /// <summary>

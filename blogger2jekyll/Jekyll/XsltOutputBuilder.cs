@@ -13,6 +13,8 @@ using blogger2jekyll.Blogger;
 using blogger2jekyll.Extensions;
 using log4net;
 
+// TODO: wrap up comment matching
+
 namespace blogger2jekyll.Jekyll
 {
     /// <summary>
@@ -101,6 +103,8 @@ namespace blogger2jekyll.Jekyll
 
                     ct++;
                 }
+
+                Log.InfoFormat("{0} total posts were exported to Jekyll format.", ct++);
             }
         }
 

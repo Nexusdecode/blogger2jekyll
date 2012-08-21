@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Blogger\Author.cs" />
     <Compile Include="Blogger\Category.cs" />
+    <Compile Include="Blogger\Comment.cs" />
     <Compile Include="Blogger\Content.cs" />
     <Compile Include="Blogger\Entry.cs" />
     <Compile Include="Blogger\ExportXmlParser.cs" />
