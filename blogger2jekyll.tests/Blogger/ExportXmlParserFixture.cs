@@ -86,7 +86,7 @@ namespace blogger2jekyll.tests.Blogger
             Assert.Greater(entry.Content.Value.Length, 0);
             Assert.AreEqual(2, entry.Links.Count);
             Assert.IsNotNull(entry.Author);
-            Assert.True(entry.IsDraft);
+            Assert.False(entry.IsPublished);
             Assert.AreEqual(0, entry.CommentCount);
 
             Assert.Throws<ArgumentException>(() => parser.Parse(string.Empty));

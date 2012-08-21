@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Reflection;
+using log4net;
 
 namespace blogger2jekyll
 {
     class Program
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         static void Main(string[] args)
         {
+            // TODO: finish this up
         }
     }
 }

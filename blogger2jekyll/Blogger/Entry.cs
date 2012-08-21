@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
@@ -45,6 +46,9 @@ namespace blogger2jekyll.Blogger
     [XmlRoot(ElementName = "entry")]
     public class Entry
     {
+        private const int SummaryMaxLength = 250;
+        private const int DescriptionMaxLength = 160;
+
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -147,9 +151,9 @@ namespace blogger2jekyll.Blogger
         /// <summary>
         /// Gets or sets a value indicating whether this instance is a draft.
         /// </summary>
-        /// <value><c>true</c> if this instance is a draft; otherwise, <c>false</c>.</value>
-        [XmlElement(ElementName = "isDraft")]
-        public bool IsDraft
+        /// <value><c>true</c> if this instance is a published; otherwise, <c>false</c>.</value>
+        [XmlElement(ElementName = "isPublished")]
+        public bool IsPublished
         {
             get
             {
@@ -167,17 +171,17 @@ namespace blogger2jekyll.Blogger
                         {
                             if (draft.Current.Value == "yes")
                             {
-                                return true;
+                                return false;
                             }
                         }
                     }
                 }
 
-                return false;
+                return true;
             }
             set
             {
-                // nothing to do; enables serialization
+                // nothing to do; facilitates serialization
             }
         }
 
@@ -201,7 +205,7 @@ namespace blogger2jekyll.Blogger
             }
             set
             {
-                // nothing to do; enables serialization
+                // nothing to do; facilitates serialization
             }
         }
 
@@ -226,7 +230,7 @@ namespace blogger2jekyll.Blogger
             }
             set
             {
-                // nothing to do; enables serialization
+                // nothing to do; facilitates serialization
             }
         }
 
@@ -246,7 +250,49 @@ namespace blogger2jekyll.Blogger
 
                 // if there is a more tag, we'll pull everything before that
                 int index = Content.Value.IndexOf("<a name='more'></a>");
-                return Content.Value.Substring(0, index > -1 ? index : 160);
+                if (index > -1)
+                {
+                    return Content.Value.Substring(0, index);
+                }
+                if (Content.Value.Length > SummaryMaxLength)
+                {
+                    return Content.Value.Substring(0, SummaryMaxLength);
+                }
+
+                return Content.Value;
+            }
+            set
+            {
+                // nothing to do; facilitates serialization
+            }
+        }
+
+        /// <summary>
+        /// Gets the post description, if it can be determined.
+        /// </summary>
+        /// <value>The summary with HTML tags removed.</value>
+        [XmlElement(ElementName = "description")]
+        public string Description
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Summary))
+                {
+                    return string.Empty;
+                }
+
+                // if there is any HTML, rip it out
+                string sansHtml = new Regex("<.*?>", RegexOptions.Compiled).Replace(Summary, string.Empty);
+                if (sansHtml.Length > DescriptionMaxLength)
+                {
+                    return sansHtml.Substring(0, DescriptionMaxLength);
+                }
+
+                return sansHtml;
+            }
+            set
+            {
+                // nothing to do; facilitates serialization
             }
         }
 

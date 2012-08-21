@@ -26,14 +26,21 @@ namespace blogger2jekyll.Jekyll
         /// Generates the Jekyll output from the specified <see cref="Feed"/> using XSLT.
         /// </summary>
         /// <param name="feed">The feed.</param>
-        /// <param name="ouputRootPath">The ouput root path.</param>
+        /// <param name="outputRootPath">The ouput root path.</param>
         /// <param name="fileType">Type of the file.</param>
-        public void GenerateOutput(Feed feed, string ouputRootPath = "_converted", string fileType = ".html")
+        public void GenerateOutput(Feed feed, string outputRootPath = "_converted", string fileType = ".html")
         {
             feed.CheckNull("feed");
-            ouputRootPath.CheckNullOrEmpty("ouputRootPath");
+            outputRootPath.CheckNullOrEmpty("ouputRootPath");
 
-            ProcessPosts(feed.Entries, ouputRootPath, fileType);
+            Log.Info("Processing posts from imported feed.");
+            Log.InfoFormat("There are {0} posts total.", feed.Entries.Count);
+            Log.InfoFormat("Output root path is {0}.", outputRootPath);
+            Log.InfoFormat("Expected XSLT output format is {0}.", fileType);
+
+            ProcessPosts(feed.Entries, outputRootPath, fileType);
+
+            Log.Info("Processing posts from imported feed complete.");
         }
 
         /// <summary>
@@ -75,13 +82,6 @@ namespace blogger2jekyll.Jekyll
                 using (MemoryStream memStream = new MemoryStream())
                 {
                     serializer.Serialize(memStream, post);
-#if DEBUG
-                    using (StringWriter dbgWriter = new StringWriter())
-                    {
-                        serializer.Serialize(dbgWriter, post);
-                        Debug.WriteLine(dbgWriter.ToString());
-                    }
-#endif
                     memStream.Position = 0;
 
                     XmlWriterSettings settings = new XmlWriterSettings { OmitXmlDeclaration = true, ConformanceLevel = ConformanceLevel.Auto };
@@ -89,8 +89,6 @@ namespace blogger2jekyll.Jekyll
                     writer = XmlWriter.Create(sb, settings);
                     if (null != writer)
                     {
-
-
                         xslt.Transform(reader, parameters, writer);
                         writer.Close();
                     }
@@ -99,8 +97,7 @@ namespace blogger2jekyll.Jekyll
                     string postOutputPath = string.Format("{0}/{1}{2}", postPath, post.Permalink, fileType);
                     string xml = sb.ToString();
 
-                    Console.WriteLine(xml);
-                    File.WriteAllText(postOutputPath, HttpUtility.HtmlDecode(xml));
+                    File.WriteAllText(postOutputPath, HttpUtility.HtmlDecode(xml).Trim());
 
                     ct++;
                 }
