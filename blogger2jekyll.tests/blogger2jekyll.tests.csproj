@@ -66,6 +66,7 @@
     <Compile Include="Blogger\ExportXmlParserFixture.cs" />
     <Compile Include="Extensions\ObjectExtensionsFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />
+    <Compile Include="Jekyll\XsltOutputBuilderFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +78,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Jekyll\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Stub\blog-08-19-2012.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
