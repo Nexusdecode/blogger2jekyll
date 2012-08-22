@@ -9,6 +9,9 @@ TBD
 ## Usage
 TBD
 
+## Limitations
+TBD
+
 ## Dependencies
 blogger2jekyll is was written in C# and requires the MS.NET Framework version 4.0. The only other external dependency
 is log4net, which will be installed automatically by Nuget when you build the solution. Otherwise, all you'll need is 
