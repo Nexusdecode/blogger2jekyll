@@ -37,8 +37,21 @@ namespace blogger2jekyll.tests.Blogger
             Assert.AreEqual("http://www.blogger.com", feed.Generator.Uri);
             Assert.AreEqual("Blogger", feed.Generator.Name);
 
-            Assert.IsNotNull(feed.Entries);
-            Assert.AreEqual(75, feed.Entries.Count);
+            // make sure settings were processed correctly
+            Assert.IsNotNull(feed.Settings);
+            Assert.AreEqual(55, feed.Settings.Count);
+
+            // make sure posts were processed correctly
+            Assert.IsNotNull(feed.Posts);
+            Assert.AreEqual(10, feed.Posts.Count);
+
+            // make sure pages were processed correctly
+            Assert.AreEqual(1, feed.Pages.Count);
+            Assert.AreEqual(0, feed.Posts.Where(e => e.Type == EntryType.Page).Count());
+
+            // make sure comments were processed correctly
+            Assert.True(feed.Posts.Any(post => post.Comments.Count == 1)); // there's only one comment in the test xml
+            Assert.AreEqual(0, feed.Posts.Where(e => e.Type == EntryType.Comment).Count());
 
             // spot check a known entry -- it looks like this:
 
@@ -73,7 +86,7 @@ namespace blogger2jekyll.tests.Blogger
 
             const string knownId = "tag:blogger.com,1999:blog-6103943824397639239.post-7528698379412928294";
 
-            Entry entry = (from e in feed.Entries where e.Id == knownId select e).First();
+            Entry entry = (from e in feed.Posts where e.Id == knownId select e).First();
             Assert.AreEqual(knownId, entry.Id);
             Assert.AreEqual(DateTime.Parse("2011-11-08T21:13:00.001-05:00"), entry.Published);
             Assert.AreEqual(DateTime.Parse("2011-11-09T00:11:14.428-05:00"), entry.Updated);

@@ -10,6 +10,7 @@ namespace blogger2jekyll
         static void Main(string[] args)
         {
             // TODO: finish this up
+            // TODO: ignore pages for export
         }
     }
 }

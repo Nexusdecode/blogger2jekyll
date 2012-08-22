@@ -37,7 +37,12 @@ namespace blogger2jekyll.Blogger
         /// <summary>
         /// A comment.
         /// </summary>
-        Comment
+        Comment,
+
+        /// <summary>
+        /// A page.
+        /// </summary>
+        Page
     }
 
     /// <summary>
@@ -102,7 +107,7 @@ namespace blogger2jekyll.Blogger
             {
                 if (!string.IsNullOrEmpty(Id))
                 {
-                    if (Id.Contains("post") && !Categories.All(category => category.Term == "http://schemas.google.com/blogger/2008/kind#comment"))
+                    if (Id.Contains("post") && Categories.Any(category => category.Term == "http://schemas.google.com/blogger/2008/kind#post"))
                     {
                         return EntryType.Post;
                     }
@@ -110,6 +115,11 @@ namespace blogger2jekyll.Blogger
                     if (Id.Contains("post") && Categories.Any(category => category.Term == "http://schemas.google.com/blogger/2008/kind#comment"))
                     {
                         return EntryType.Comment;
+                    }
+
+                    if (Id.Contains("page") && Categories.Any(category => category.Term == "http://schemas.google.com/blogger/2008/kind#page"))
+                    {
+                        return EntryType.Page;
                     }
 
                     if (Id.Contains("layout"))
@@ -133,7 +143,7 @@ namespace blogger2jekyll.Blogger
         /// <value>The links.</value>
         [XmlArray(ElementName = "comments")]
         [XmlArrayItem(ElementName = "comment")]
-        public List<Comment> Comments { get; set; }
+        public List<Entry> Comments { get; set; }
 
         /// <summary>
         /// Gets or sets the link elements.
@@ -311,7 +321,7 @@ namespace blogger2jekyll.Blogger
         {
             Categories = new List<Category>();
             Links = new List<Link>();
-            Comments = new List<Comment>();
+            Comments = new List<Entry>();
         }
 
         /// <summary>

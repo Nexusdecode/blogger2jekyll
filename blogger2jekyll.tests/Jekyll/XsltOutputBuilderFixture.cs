@@ -21,7 +21,7 @@ namespace blogger2jekyll.tests.Jekyll
             XsltOutputBuilder converter = new XsltOutputBuilder();
             converter.GenerateOutput(feed);
 
-            Assert.AreEqual(feed.Entries.Where(post => post.Type == EntryType.Post).Count(), Directory.GetFiles("_converted/_posts").Count());
+            Assert.AreEqual(feed.Posts.Where(post => post.Type == EntryType.Post).Count(), Directory.GetFiles("_converted/_posts").Count());
         }
     }
 }

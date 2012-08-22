@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
@@ -38,33 +39,100 @@ namespace blogger2jekyll.Blogger
             XmlSerializer serializer = new XmlSerializer(typeof(Feed));
             Feed feed = (Feed)serializer.Deserialize(new StringReader(sourceDocument.OuterXml));
 
-            foreach (Entry entry in feed.Entries)
-            {
-                entry.Comments = MatchComments(entry, feed);
-            }
+            ProcessComments(feed);
+            ProcessPages(feed);
+            ProcessSettings(feed);
+
+            Debug.WriteLine("Total entries: " + feed.Posts.Count);
+            Debug.WriteLine("Total posts: " + feed.Posts.Where(entry => entry.Type == EntryType.Post).Count());
+            Debug.WriteLine("Total pages: " + feed.Pages.Count);
+            Debug.WriteLine("Total settings: " + feed.Settings.Count);
 
             Log.InfoFormat("blogger2jekyll.Blogger.ExportXmlParses conversion completed at {0}.", DateTime.Now);
             Log.InfoFormat("The blog {0} was converted.", feed.Title);
-            Log.InfoFormat("{0} posts were found in the export file.", feed.Entries.Count);
+            Log.InfoFormat("{0} posts were found in the export file.", feed.Posts.Count);
 
             return feed;
         }
 
         /// <summary>
+        /// Matches page entries, if they exist.
+        /// </summary>
+        /// <param name="feed">The feed.</param>
+        private void ProcessPages(Feed feed)
+        {
+            Debug.Assert(null != feed);
+            Debug.Assert(null != feed.Posts);
+
+            List<Entry> pages = feed.Posts.Where(entry => entry.Type == EntryType.Page).ToList();
+            foreach (Entry page in pages)
+            {
+                feed.Pages.Add(page);
+                feed.Posts.Remove(page);
+            }
+        }
+
+        /// <summary>
+        /// Matches settings entries, if they exist.
+        /// </summary>
+        /// <param name="feed">The feed.</param>
+        private void ProcessSettings(Feed feed)
+        {
+            Debug.Assert(null != feed);
+            Debug.Assert(null != feed.Posts);
+
+            List<Entry> settings = feed.Posts.Where(entry => entry.Type == EntryType.Settings || entry.Type == EntryType.Layout).ToList();
+            foreach (Entry page in settings)
+            {
+                feed.Settings.Add(page);
+                feed.Posts.Remove(page);
+            }
+        }
+
+        /// <summary>
         /// Matches comments to the specified post, if they exist.
         /// </summary>
-        /// <param name="entry">The entry.</param>
         /// <param name="feed">The feed.</param>
-        /// <returns>A list of mathing <see cref="Comment"/> entries, if they exist.</returns>
-        private List<Comment> MatchComments(Entry entry, Feed feed)
+        private void ProcessComments(Feed feed)
         {
-            Debug.Assert(null != entry);
             Debug.Assert(null != feed);
+            Debug.Assert(null != feed.Posts);
 
-            // TODO: implement
-            // TODO: remove the entry from the entries list once it's matched
+            List<Entry> allPosts = feed.Posts.Where(entry => entry.Type == EntryType.Post).ToList();
+            foreach (Entry postEntry in allPosts)
+            {
+                if (feed.Posts.Count == 0)
+                {
+                    // this shouldn't happen, but if it does, there's nothing to do
+                    Log.Warn("No entries were available to match.");
+                    return;
+                }
 
-            return new List<Comment>();
+                int ct = 0;
+
+                // metadata will contain thr:in-reply-to tag; the ref of this tag is the id of the post
+                List<Entry> allComments = feed.Posts.Where(entry => entry.Type == EntryType.Comment).ToList();
+                foreach (Entry possibleMatch in allComments)
+                {
+                    if (null != possibleMatch.Metadata)
+                    {
+                        XmlElement commentNode = possibleMatch.Metadata.Where(node => node.LocalName == "in-reply-to").FirstOrDefault();
+                        if (null != commentNode)
+                        {
+                            string relatedPostId = commentNode.GetAttribute("ref");
+                            if (!string.IsNullOrEmpty(relatedPostId) && relatedPostId == postEntry.Id)
+                            {
+                                // it's a match!
+                                postEntry.Comments.Add(possibleMatch);
+                                feed.Posts.Remove(possibleMatch); // prune it
+                                ct++;
+                            }
+                        }
+                    }
+                }
+
+                Log.InfoFormat("{0} comments were matched to the post having id {1}", ct, postEntry.Id);
+            }
         }
     }
 }

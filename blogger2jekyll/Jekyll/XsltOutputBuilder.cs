@@ -13,8 +13,6 @@ using blogger2jekyll.Blogger;
 using blogger2jekyll.Extensions;
 using log4net;
 
-// TODO: wrap up comment matching
-
 namespace blogger2jekyll.Jekyll
 {
     /// <summary>
@@ -36,11 +34,11 @@ namespace blogger2jekyll.Jekyll
             outputRootPath.CheckNullOrEmpty("ouputRootPath");
 
             Log.Info("Processing posts from imported feed.");
-            Log.InfoFormat("There are {0} posts total.", feed.Entries.Count);
+            Log.InfoFormat("There are {0} posts total.", feed.Posts.Count);
             Log.InfoFormat("Output root path is {0}.", outputRootPath);
             Log.InfoFormat("Expected XSLT output format is {0}.", fileType);
 
-            ProcessPosts(feed.Entries, outputRootPath, fileType);
+            ProcessPosts(feed.Posts, outputRootPath, fileType);
 
             Log.Info("Processing posts from imported feed complete.");
         }
@@ -56,6 +54,13 @@ namespace blogger2jekyll.Jekyll
             Debug.Assert(null != entries);
             Debug.Assert(!string.IsNullOrEmpty(ouputRootPath));
             Debug.Assert(!string.IsNullOrEmpty(fileType));
+
+            if (entries.Count() == 0)
+            {
+                // nothing to do
+                Log.Warn("No entries were found.");
+                return;
+            }
 
             fileType = fileType.TrimStart(new [] {'.'});
             fileType = string.Concat(".", fileType);

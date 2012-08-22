@@ -36,7 +36,21 @@ namespace blogger2jekyll.Blogger
         /// </summary>
         /// <value>The entries.</value>
         [XmlElement(ElementName = "entry")]
-        public List<Entry> Entries { get; set; }
+        public List<Entry> Posts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pages.
+        /// </summary>
+        /// <value>The pages.</value>
+        [XmlElement(ElementName = "page")]
+        public List<Entry> Pages { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blog settings.
+        /// </summary>
+        /// <value>The settings.</value>
+        [XmlElement(ElementName = "setting")]
+        public List<Entry> Settings { get; set; }
 
         /// <summary>
         /// Gets or sets the author.
@@ -64,8 +78,10 @@ namespace blogger2jekyll.Blogger
         /// </summary>
         public Feed()
         {
-            Entries = new List<Entry>();
+            Posts = new List<Entry>();
             Links = new List<Link>();
+            Pages = new List<Entry>();
+            Settings = new List<Entry>();
         }
     }
 }
