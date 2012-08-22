@@ -65,6 +65,8 @@ namespace blogger2jekyll.Blogger
                 feed.Pages.Add(page);
                 feed.Posts.Remove(page);
             }
+
+            Log.InfoFormat("{0} page entries were processed", feed.Pages);
         }
 
         /// <summary>
@@ -82,6 +84,8 @@ namespace blogger2jekyll.Blogger
                 feed.Settings.Add(page);
                 feed.Posts.Remove(page);
             }
+
+            Log.InfoFormat("{0} settings entries were processed", feed.Settings);
         }
 
         /// <summary>
