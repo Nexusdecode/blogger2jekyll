@@ -43,11 +43,6 @@ namespace blogger2jekyll.Blogger
             ProcessPages(feed);
             ProcessSettings(feed);
 
-            Debug.WriteLine("Total entries: " + feed.Posts.Count);
-            Debug.WriteLine("Total posts: " + feed.Posts.Where(entry => entry.Type == EntryType.Post).Count());
-            Debug.WriteLine("Total pages: " + feed.Pages.Count);
-            Debug.WriteLine("Total settings: " + feed.Settings.Count);
-
             Log.InfoFormat("blogger2jekyll.Blogger.ExportXmlParses conversion completed at {0}.", DateTime.Now);
             Log.InfoFormat("The blog {0} was converted.", feed.Title);
             Log.InfoFormat("{0} posts were found in the export file.", feed.Posts.Count);

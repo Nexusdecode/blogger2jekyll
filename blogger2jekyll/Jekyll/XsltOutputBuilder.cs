@@ -49,7 +49,9 @@ namespace blogger2jekyll.Jekyll
         /// <param name="entries">The entries.</param>
         /// <param name="ouputRootPath">The ouput root path.</param>
         /// <param name="fileType">Type of the file.</param>
-        private void ProcessPosts(IEnumerable<Entry> entries, string ouputRootPath, string fileType)
+        /// <param name="includeSummary">if set to <c>true</c> a summary entry will be included in the YAML Front Matter output.</param>
+        /// <param name="includeDescription">if set to <c>true</c> a description entry will be included in the YAML Front Matter output.</param>
+        private void ProcessPosts(IEnumerable<Entry> entries, string ouputRootPath, string fileType, bool includeSummary = true, bool includeDescription = true)
         {
             Debug.Assert(null != entries);
             Debug.Assert(!string.IsNullOrEmpty(ouputRootPath));
@@ -81,6 +83,8 @@ namespace blogger2jekyll.Jekyll
 
             XsltArgumentList parameters = new XsltArgumentList();
             parameters.AddParam("fileType", string.Empty, fileType);
+            parameters.AddParam("includeSummary", string.Empty, includeSummary);
+            parameters.AddParam("includeDescription", string.Empty, includeDescription);
 
             int ct = 0;
             foreach(Entry post in entries.Where(p => p.Type == EntryType.Post))
