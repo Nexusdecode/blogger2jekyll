@@ -21,7 +21,11 @@ A pared-down XML sample of my old Blogger site is provided in the unit test proj
 At present blogger2jekyll recognizes page, layout, and configuration-related etnries in the source XML, but these are 
 not converted. In other words, only posts will be generated.
 
-## Building blogger2jekyll
+## Installation
+Download the latest package from the project's [downloads](https://github.com/kcargile/blogger2jekyll/downloads) page. 
+Extract the zip to a folder on your machine, add your Blogger XML export, and you're ready to go.
+
+## Building blogger2jekyll Yourself
 Clone the repository, open blogger2jekyll.sln in Visual Studio, select the desired configuration, and click Build -> 
 Build Solution (F6). Alternatively, you can build from the command line using csc. For example:
 ```powershell
@@ -48,4 +52,4 @@ If you find an bug please [open an issue](https://github.com/kcargile/blogger2je
 me via my [blog](http://www.kriscargile.com). For support, please see this readme.
 
 ## License
-Released under the GPL license. Use at your own risk.
+Released under the GPL license. Use at your own risk. Copyright (c) 2012, Cargile Technology Group, LLC.
