@@ -21,6 +21,7 @@ namespace blogger2jekyll.Jekyll
     public class XsltOutputBuilder
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private const string DefaultOutputPath = "_converted";
 
         /// <summary>
         /// Generates the Jekyll output from the specified <see cref="Feed"/> using XSLT.
@@ -28,10 +29,14 @@ namespace blogger2jekyll.Jekyll
         /// <param name="feed">The feed.</param>
         /// <param name="outputRootPath">The ouput root path.</param>
         /// <param name="fileType">Type of the file.</param>
-        public void GenerateOutput(Feed feed, string outputRootPath = "_converted", string fileType = ".html")
+        public void GenerateOutput(Feed feed, string outputRootPath = DefaultOutputPath, string fileType = ".html")
         {
             feed.CheckNull("feed");
-            outputRootPath.CheckNullOrEmpty("ouputRootPath");
+            
+            if (string.IsNullOrEmpty(outputRootPath))
+            {
+                outputRootPath = DefaultOutputPath;
+            }
 
             Log.Info("Processing posts from imported feed.");
             Log.InfoFormat("There are {0} posts total.", feed.Posts.Count);

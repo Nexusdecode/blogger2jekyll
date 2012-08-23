@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using blogger2jekyll.Blogger;
 using blogger2jekyll.Jekyll;
@@ -18,10 +19,12 @@ namespace blogger2jekyll.tests.Jekyll
 
             Assert.IsNotNull(feed);
 
-            XsltOutputBuilder converter = new XsltOutputBuilder();
-            converter.GenerateOutput(feed);
+            XsltOutputBuilder builder = new XsltOutputBuilder();
+            builder.GenerateOutput(feed, string.Empty);
 
             Assert.AreEqual(feed.Posts.Where(post => post.Type == EntryType.Post).Count(), Directory.GetFiles("_converted/_posts").Count());
+            
+            Assert.Throws<ArgumentNullException>(() => builder.GenerateOutput(null));
         }
     }
 }
