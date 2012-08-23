@@ -14,6 +14,10 @@ namespace blogger2jekyll
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        /// <summary>
+        /// Do it.
+        /// </summary>
+        /// <param name="args">Args.</param>
         static void Main(string[] args)
         {
             if (args.Contains("/?"))
