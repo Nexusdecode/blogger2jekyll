@@ -13,7 +13,7 @@ The bundled stylsheet outputs posts in a HTML format, however, you are free to c
 something different, say Markdown or Textile. If anyone finds this useful and wants me to include alternative format  
 stylesheets, send a pull request.
 
-By default, posts are output to the __converted_ folder, relative to the execution path of blogger2jekyll. 
+By default, posts are output to the __converted_ folder, relative to the execution path of blogger2jekyll.exe. 
 
 A pared-down XML sample of my old Blogger site is provided in the unit test project for testing.
 
@@ -32,8 +32,8 @@ Build Solution (F6). Alternatively, you can build from the command line using cs
 ```powershell
 	blogger2jekyll /in:<inputpath> /out:<outputpath>
 ```
-<inputpath> is the path to your Blogger XML export file
-<outputpath> overrides the path where exported posts will be written (defaults to _converted)
+* _inputpath_ is the path to your Blogger XML export file.
+* _outputpath_ overrides the path where exported posts will be written (defaults to _converted).
 
 ## Dependencies
 blogger2jekyll is was written in C# and requires the MS.NET Framework version 4.0. The only other external dependency
