@@ -10,8 +10,8 @@ conversion by Jekyll and Liquid by using an XSLT stylesheet. The tool uses an in
 data, as this provides better pre-processing and extensibility options.
 
 The bundled stylsheet outputs posts in a HTML format, however, you are free to change the XSLT if you'd prefer to use 
-something different, say Markdown or Textile. If anyone finds this useful and wants me to include alternative format  
-stylesheets, send a pull request.
+something different, say Markdown or Textile. If anyone finds this useful and wants to include alternative stylesheets, 
+please send me a pull request.
 
 By default, posts are output to the __converted_ folder, relative to the execution path of blogger2jekyll.exe. 
 
