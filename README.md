@@ -37,7 +37,7 @@ Build Solution (F6). Alternatively, you can build from the command line using cs
 	blogger2jekyll /in:<inputpath> /out:<outputpath>
 ```
 * _inputpath_ is the path to your Blogger XML export file.
-* _outputpath_ overrides the path where exported posts will be written (defaults to _converted).
+* _outputpath_ overrides the path where exported posts will be written (defaults to __converted_).
 
 ## Dependencies
 blogger2jekyll is was written in C# and requires the MS.NET Framework version 4.0. The only other external dependency
