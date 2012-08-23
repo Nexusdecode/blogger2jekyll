@@ -52,4 +52,4 @@ If you find an bug please [open an issue](https://github.com/kcargile/blogger2je
 me via my [blog](http://www.kriscargile.com).
 
 ## License
-Released under the GPL license. Use at your own risk. Copyright (c) 2012, Cargile Technology Group, LLC.
+See LICENSE. Copyright (c) 2012, Cargile Technology Group, LLC.
