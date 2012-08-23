@@ -49,7 +49,7 @@ See Google's documentation on importing and exporting blog data [here]([GitHub](
 
 ## Issues
 If you find an bug please [open an issue](https://github.com/kcargile/blogger2jekyll/issues) or alternatively contact 
-me via my [blog](http://www.kriscargile.com). For support, please see this readme.
+me via my [blog](http://www.kriscargile.com).
 
 ## License
 Released under the GPL license. Use at your own risk. Copyright (c) 2012, Cargile Technology Group, LLC.
