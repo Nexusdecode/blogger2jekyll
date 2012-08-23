@@ -21,7 +21,11 @@ namespace blogger2jekyll.Jekyll
     public class XsltOutputBuilder
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private const string DefaultOutputPath = "_converted";
+
+        /// <summary>
+        /// Default output folder path.
+        /// </summary>
+        internal const string DefaultOutputPath = "_converted";
 
         /// <summary>
         /// Generates the Jekyll output from the specified <see cref="Feed"/> using XSLT.
