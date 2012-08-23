@@ -29,7 +29,7 @@ Extract the zip to a folder on your machine, add your Blogger XML export, and yo
 Clone the repository, open blogger2jekyll.sln in Visual Studio, select the desired configuration, and click Build -> 
 Build Solution (F6). Alternatively, you can build from the command line using csc. For example:
 ```powershell
-	csc /target:exe /out:blogger2jekyll.dll /nologo /debug *.cs
+	csc /target:exe /out:blogger2jekyll.exe /nologo /debug *.cs
 ```
 
 ## Usage
