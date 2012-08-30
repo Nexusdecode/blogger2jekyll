@@ -9,7 +9,7 @@
 layout: post
 published: <xsl:value-of select="./isPublished" />
 title: <xsl:value-of select="./title" />
-tags: <xsl:call-template name="join"><xsl:with-param name="valueList" select="./category[@scheme='http://www.blogger.com/atom/ns#']/@term"/><xsl:with-param name="separator" select="', '"/></xsl:call-template>    
+tags: [<xsl:call-template name="join"><xsl:with-param name="valueList" select="./category[@scheme='http://www.blogger.com/atom/ns#']/@term"/><xsl:with-param name="separator" select="', '"/></xsl:call-template>]    
 permalink: /<xsl:value-of select="./permalink" /><xsl:value-of select="$fileType" />
 <xsl:if test="$includeDescription='true'">
 description: <xsl:value-of select="substring(./description,0,160)" />
