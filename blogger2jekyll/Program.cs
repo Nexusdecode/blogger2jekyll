@@ -70,7 +70,9 @@ namespace blogger2jekyll
             XsltOutputBuilder builder = new XsltOutputBuilder();
             builder.GenerateOutput(feed, exportPath);
 
-            string completeMessage = string.Format("Conversion complete. {0} posts were exported to {1}.", feed.Posts.Count, string.IsNullOrEmpty(exportPath) ? XsltOutputBuilder.DefaultOutputPath : exportPath);
+            int postCount = feed.Posts.Where(post => post.Type == EntryType.Post).Count();
+
+            string completeMessage = string.Format("Conversion complete. {0} posts were exported to {1}.", postCount, string.IsNullOrEmpty(exportPath) ? XsltOutputBuilder.DefaultOutputPath : exportPath);
             Log.Info(completeMessage);
             Console.WriteLine(completeMessage);
         }
