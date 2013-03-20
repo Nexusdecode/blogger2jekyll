@@ -45,8 +45,7 @@ your Blogger export XML file (see the next section).
 See Google's documentation on importing and exporting blog data [here]([GitHub](http://support.google.com/blogger/bin/answer.py?hl=en&answer=97416). 
 
 ## Issues
-If you find an bug please [open an issue](https://github.com/kcargile/blogger2jekyll/issues) or alternatively contact 
-me via my [blog](http://www.kriscargile.com).
+If you find an bug please [open an issue](https://github.com/kcargile/blogger2jekyll/issues).
 
 ## License
 See LICENSE. Copyright (c) 2012, Cargile Technology Group, LLC.
